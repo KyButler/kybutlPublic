@@ -1,0 +1,42 @@
+//- team_stats.pug
+include ../partials/header.pug
+include ../partials/menu.pug
+
+div.container
+
+  br
+  div.jumbotron
+    h1.display-4 Fall 2018 Stats
+    p.lead CU Football Statistics for the 2018 Football Season!
+
+  table.table.table-bordered#stats_table(action="/home/team_stats", method="get")
+    tr
+      th.align-bottom(rowspan="2") Game Date
+      th.align-bottom(rowspan="2") Opposing Team Name
+      th.text-center(colspan="2") Score
+      th.align-bottom(rowspan="2") Winner
+    tr
+      th Home Score
+      th Opp. Score
+    //- TODO: Iterate over the football_game table data and display the date, name, home score, and visitor score for each row. Determine the winner and display the winner's name in the last column
+    each val in football_games
+      tr
+        th #{val.game_date}
+        th #{val.visitor_name}
+        th #{val.home_score}
+        th #{val.visitor_score}
+        th #{val.home_score > val.visitor_score ? 'CU Boulder' : val.visitor_name}
+  br
+
+  table.table.text-center(action="/home/team_stats", method="get")
+    tr
+      th Wins
+      th Losses
+    tr
+      script
+      td #{win_count}
+      td #{loss_count}
+      //- TODO: Display the total number of wins here. This value should come from your server-side db query.
+      //- TODO: Display the total number of losses here. This value should come from your server-side db query.
+
+include ../partials/footer.pug
